@@ -37,7 +37,7 @@ public class Scanner {
 
     /**
      * Consome caracteres da fonte até que eles componham um lexema de
-     * um dos tokens da linguagem, coinstrói um objeto representando esse
+     * um dos tokens da linguagem, constrói um objeto representando esse
      * token associado ao lexema lido e o retorna.
      *
      * @return Token reconhecido.
@@ -62,8 +62,123 @@ public class Scanner {
             String stringValue = lexema.toString();
 
             return new NumberToken(currentLine, lexemeStart, stringValue);
-        }
+        } else if (Character.getCurrentChar() == '$' and Character.isLetter(Character.getCurrentChar())){
+            StringBuilder lexema = new StringBuilder();
 
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+
+            do {
+                lexema.append(source.getCurrentChar());
+                source.advance();
+            } while (Character.isLetter(source.getCurrentChar()));
+
+            return new VariableIdentifierToken(currentLine, lexemeStart, stringValue);
+        }else if(Character.getCurrentChar() == '$' and ((Character.isDigit(Character.getCurrentChar())) or (Character.getCurrentChar() =='?'))){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+
+            do {
+                lexema.append(source.getCurrentChar());
+                source.advance();
+            } while (Character.isDigit(source.getCurrentChar()) or (Character.getCurrentChar() =='?'));
+
+            return new ResultIdentifierToken(currentLine, lexemeStart, stringValue);
+        }else if(Character.getCurrentChar() == '@'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+
+            do {
+                lexema.append(source.getCurrentChar());
+                source.advance();
+            } while (Character.isDigit(source.getCurrentChar()) or Character.isLetter(Character.getCurrentChar()));
+
+            return new FunctionIdentifierToken(currentLine, lexemeStart, stringValue);
+        }else if(Character.getCurrentChar() == '='){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new AtribIdentifierToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == '+'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new PlusIdentifierToken(currentLine, lexemeStart);
+
+        }else if(Character.getCurrentChar() == '-'){
+            StringBuilder lexema = new StringBuilder();
+            source.advance();
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+
+            return new MinusIdentifierToken(currentLine, lexemeStart);
+
+        }else if(Character.getCurrentChar() == '*'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new TimesToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == '/'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new DivToken(currentLine, lexemeStart);
+
+        }else if(Character.getCurrentChar() == '%'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new ModToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == '^'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new PowToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == '('){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new LParenToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == ')'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new RParenToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == ','){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new CommaToken(currentLine, lexemeStart);
+        }else if(Character.getCurrentChar() == ';'){
+            StringBuilder lexema = new StringBuilder();
+
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
+            source.advance();
+            return new SemiToken(currentLine, lexemeStart);
+        }
         // TODO Recuperação de erros.
 
         return null;

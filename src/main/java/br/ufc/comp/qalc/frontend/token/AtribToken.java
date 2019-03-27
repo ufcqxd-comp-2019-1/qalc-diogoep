@@ -12,6 +12,6 @@ public class AtribToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%=%";
+        return "%ATRIB%";
     }
 }

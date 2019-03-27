@@ -12,6 +12,6 @@ public class CommaToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%,%";
+        return "%COMMA%";
     }
 }

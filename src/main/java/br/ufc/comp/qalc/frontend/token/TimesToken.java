@@ -12,6 +12,6 @@ public class TimesToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%*%";
+        return "%TIMES%";
     }
 }

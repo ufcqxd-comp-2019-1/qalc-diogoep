@@ -12,6 +12,6 @@ public class PowToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%^%";
+        return "%POW%";
     }
 }

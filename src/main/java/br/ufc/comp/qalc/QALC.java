@@ -4,11 +4,19 @@ import br.ufc.comp.qalc.report.MessageCenter;
 import br.ufc.comp.qalc.report.TokensReporter;
 import br.ufc.comp.qalc.report.messages.MessageCategory;
 import picocli.CommandLine;
-
+import br.ufc.comp.qalc.frontend.token.CommentToken;
+import br.ufc.comp.qalc.frontend.token.SpaceToken;
+import br.ufc.comp.qalc.frontend.token.BreakLineToken;
+import br.ufc.comp.qalc.frontend.token.EOFToken;
+import br.ufc.comp.qalc.report.messages.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.io.InputStream;
+import br.ufc.comp.qalc.frontend.Scanner;
+import br.ufc.comp.qalc.frontend.Source;
 
 /**
  * Classe principal do interpretador.
@@ -49,7 +57,7 @@ public class QALC {
             paramLabel = "PHASE",
             description = "Informa a última fase a ser executada na interpretação da entrada." +
                     "\n@|bold Valores válidos:|@ ${COMPLETION-CANDIDATES}." +
-                    "\n@|bold Valor padrão:|@ @|underline ${DEFAULT-VALUE}|@."
+                       "\n@|bold Valor padrão:|@ @|underline ${DEFAULT-VALUE}|@."
     )
     InterpreterPass stopAt = InterpreterPass.RUNNER;
 
@@ -101,18 +109,25 @@ public class QALC {
             } else if (cmd.isVersionHelpRequested()) {
                 cmd.printVersionHelp(System.out);
             } else {
-                // Alterar esta porção do código
-                // ---->
-
+                InputStream inputToStream = qalc.readFrom == null ? System.in : new FileInputStream(qalc.readFrom);
                 OutputStream outputToStream = qalc.outputTo == null ? System.out : new FileOutputStream(qalc.outputTo);
-
                 // WARNING: Apenas a última fase deve gerar saída.
                 switch (qalc.stopAt) {
                     case LEXER:
-                        MessageCenter.registerConsumerFor(
-                                MessageCategory.SCANNING,
-                                new TokensReporter(outputToStream, qalc.outputVerbosity)
-                        );
+                        MessageCenter.registerConsumerFor(MessageCategory.SCANNING, new TokensReporter(outputToStream, qalc.outputVerbosity));
+                        Scanner scan = new Scanner(new Source(inputToStream));
+                        NewTokenMessage mensagem;
+                        while(true){
+                            mensagem = new NewTokenMessage(scan.getNextToken());
+                            if(mensagem.getToken() instanceof EOFToken){
+                                break;
+                            }
+                            if(mensagem.getToken() instanceof SpaceToken || mensagem.getToken() instanceof CommentToken || mensagem.getToken() instanceof BreakLineToken){
+                                continue;
+                            }else{
+                                MessageCenter.deliver(mensagem);
+                            }
+                        }
                         break;
                     case PARSER:
                         // TODO

@@ -12,6 +12,6 @@ public class RParenToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%)%";
+        return "%RPAREN%";
     }
 }

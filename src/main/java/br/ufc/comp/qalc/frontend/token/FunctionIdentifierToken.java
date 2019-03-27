@@ -28,7 +28,6 @@ public class FunctionIdentifierToken extends Token {
      */
     public String getFunctionIdentifier() {
         interpretAttributes();
-
         return stringValue;
     }
 

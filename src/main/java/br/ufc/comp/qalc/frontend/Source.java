@@ -123,7 +123,7 @@ public class Source {
      *
      * @return Posição relativa à entrada do último caractere lido.
      */
-    public long getCurrentPosition() {
+    public long getCurrentPosition(){
         return currentPosition;
     }
 

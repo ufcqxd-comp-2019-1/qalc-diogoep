@@ -43,11 +43,9 @@ public class Scanner {
      * @throws IOException Caso haja problema na leitura da fonte.
      */
     public Token getNextToken() throws IOException {
-        // TODO Reconhecimento de tokens
-
         if (source.getCurrentChar() == Source.EOF) {
             return new EOFToken(source.getCurrentLine(), source.getCurrentColumn());
-        } else if (Character.isDigit(source.getCurrentChar())) { // NumberToken
+        } else if (Character.isDigit(source.getCurrentChar())) {
             StringBuilder lexema = new StringBuilder();
 
             long currentLine = source.getCurrentLine();
@@ -57,6 +55,15 @@ public class Scanner {
                 lexema.append(source.getCurrentChar());
                 source.advance();
             } while (Character.isDigit(source.getCurrentChar()));
+
+            if(source.getCurrentChar() == '.'){
+                lexema.append(source.getCurrentChar());
+                source.advance();
+                do {
+                    lexema.append(source.getCurrentChar());
+                    source.advance();
+                } while(Character.isDigit(source.getCurrentChar()));
+            }
 
             String stringValue = lexema.toString();
 
@@ -76,7 +83,7 @@ public class Scanner {
                 String stringValue = lexema.toString();
                 return new ResultIdentifierToken(currentLine, lexemeStart, stringValue);
 
-            } else if (Character.isLetter(source.getCurrentChar())) {
+            }else if (Character.isLetter(source.getCurrentChar())) {
                 StringBuilder lexema = new StringBuilder();
 
                 long currentLine = source.getCurrentLine();
@@ -90,6 +97,11 @@ public class Scanner {
                 String stringValue = lexema.toString();
 
                 return new VariableIdentifierToken(currentLine, lexemeStart, stringValue);
+            }else{
+                long currentLine = source.getCurrentLine();
+                long lexemeStart = source.getCurrentColumn();
+                source.advance();
+                return new Error(currentLine, lexemeStart);
             }
         } else if (source.getCurrentChar() == '@') {
             StringBuilder lexema = new StringBuilder();
@@ -166,6 +178,11 @@ public class Scanner {
                 long lexemeStart = source.getCurrentColumn();
                 source.advance();
                 return new BreakLineToken(currentLine, lexemeStart);
+            }else{
+                long currentLine = source.getCurrentLine();
+                long lexemeStart = source.getCurrentColumn();
+                source.advance();
+                return new Error(currentLine, lexemeStart);
             }
         } else if (source.getCurrentChar() == '#') {
             long currentLine = source.getCurrentLine();
@@ -185,7 +202,6 @@ public class Scanner {
             source.advance();
             return new Error(currentLine, lexemeStart);
         }
-        return null;
 
     }
     /**

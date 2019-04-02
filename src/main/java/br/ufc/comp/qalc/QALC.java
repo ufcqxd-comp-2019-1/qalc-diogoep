@@ -119,7 +119,7 @@ public class QALC {
                         NewTokenMessage mensagem;
                         while(true){
                             mensagem = new NewTokenMessage(scan.getNextToken());
-                            if(mensagem.getToken() instanceof EOFToken){
+                            if(mensagem.getToken() instanceof EOFToken) {
                                 break;
                             }
                             if(mensagem.getToken() instanceof SpaceToken || mensagem.getToken() instanceof CommentToken || mensagem.getToken() instanceof BreakLineToken){

@@ -12,6 +12,6 @@ public class LParenToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%LPAREN%";
+        return "LPAREN";
     }
 }

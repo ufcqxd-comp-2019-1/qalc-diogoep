@@ -12,6 +12,6 @@ public class PlusToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%PLUS%";
+        return "PLUS";
     }
 }

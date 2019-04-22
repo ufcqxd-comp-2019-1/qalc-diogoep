@@ -17,6 +17,6 @@ public class Error extends Token {
 
     @Override
     public String getTokenIdentifier(){
-        return "%ERRO%";
+        return "ERRO";
     }
 }

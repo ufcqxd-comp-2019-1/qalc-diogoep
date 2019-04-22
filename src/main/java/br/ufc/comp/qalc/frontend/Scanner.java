@@ -171,19 +171,11 @@ public class Scanner {
             long lexemeStart = source.getCurrentColumn();
             source.advance();
             return new SemiToken(currentLine, lexemeStart);
-        } else if (source.getCurrentChar() == '/') {
+        } else if (source.getCurrentChar() == '\n') {
+            long currentLine = source.getCurrentLine();
+            long lexemeStart = source.getCurrentColumn();
             source.advance();
-            if (source.getCurrentChar() == 'n') {
-                long currentLine = source.getCurrentLine();
-                long lexemeStart = source.getCurrentColumn();
-                source.advance();
-                return new BreakLineToken(currentLine, lexemeStart);
-            }else{
-                long currentLine = source.getCurrentLine();
-                long lexemeStart = source.getCurrentColumn();
-                source.advance();
-                return new Error(currentLine, lexemeStart);
-            }
+            return new BreakLineToken(currentLine, lexemeStart);
         } else if (source.getCurrentChar() == '#') {
             long currentLine = source.getCurrentLine();
             long lexemeStart = source.getCurrentColumn();
@@ -193,9 +185,11 @@ public class Scanner {
             return new CommentToken(currentLine, lexemeStart);
         } else if (source.getCurrentChar() == ' ') {
             long currentLine = source.getCurrentLine();
-            long lexemeStart = source.getCurrentColumn();
-            source.advance();
-            return new SpaceToken(currentLine, lexemeStart);
+            long lexemaStart = source.getCurrentColumn();
+            do{
+                source.advance();
+            }while (source.getCurrentChar() == ' ');
+            return new SpaceToken(currentLine, lexemaStart);
         } else {
             long currentLine = source.getCurrentLine();
             long lexemeStart = source.getCurrentColumn();

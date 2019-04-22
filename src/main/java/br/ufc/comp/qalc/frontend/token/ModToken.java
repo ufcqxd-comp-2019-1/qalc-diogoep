@@ -12,6 +12,6 @@ public class ModToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%MOD%";
+        return "MOD";
     }
 }

@@ -12,11 +12,11 @@ public class BreakLineToken extends Token {
     @Override
     public String toString(){
         // NOTE: Não existe lexema associado, porém é o único token que não possui
-        return "/n";
+        return "\n";
     }
 
     @Override
     public String getTokenIdentifier(){
-        return "%BREAKLINE%";
+        return "BREAKLINE";
     }
 }

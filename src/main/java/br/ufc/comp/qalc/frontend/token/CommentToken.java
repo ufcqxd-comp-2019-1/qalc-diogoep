@@ -17,6 +17,6 @@ public class CommentToken extends Token {
 
     @Override
     public String getTokenIdentifier() {
-        return "%COMMENT%";
+        return "COMMENT";
     }
 }

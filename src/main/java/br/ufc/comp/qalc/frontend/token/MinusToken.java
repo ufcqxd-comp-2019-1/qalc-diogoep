@@ -12,6 +12,6 @@ public class MinusToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%MINUS%";
+        return "MINUS";
     }
 }

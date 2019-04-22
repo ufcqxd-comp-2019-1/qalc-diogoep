@@ -12,6 +12,6 @@ public class SemiToken extends Token{
 
     @Override
     public String getTokenIdentifier(){
-        return "%SEMI%";
+        return "SEMI";
     }
 }

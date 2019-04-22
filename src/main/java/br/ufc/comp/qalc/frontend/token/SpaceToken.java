@@ -17,6 +17,6 @@ public class SpaceToken extends Token {
 
     @Override
     public String getTokenIdentifier() {
-        return "%SPACE%";
+        return "SPACE";
     }
 }
